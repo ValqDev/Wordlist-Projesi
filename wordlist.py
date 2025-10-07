@@ -112,7 +112,6 @@ def generate_candidates(profile: Dict[str, Any], max_per_profile: int = 30000000
 
     candidates = set()
 
-    # Kalıp kombinasyonlarını döngüyle üretelim
     base_patterns = [
         f"{f}{y}",
         f"{f}{y[-2:]}" if y else f"{f}",
@@ -132,7 +131,6 @@ def generate_candidates(profile: Dict[str, Any], max_per_profile: int = 30000000
     for k in kids:
         base_patterns += [f"{f}{k}", f"{k}{y[-2:]}" if y else f"{k}"]
 
-    # Döngüyle varyasyon üretelim
     counter = 0
     while len(candidates) < max_per_profile:
         for p in base_patterns:
@@ -143,12 +141,12 @@ def generate_candidates(profile: Dict[str, Any], max_per_profile: int = 30000000
             candidates.add(p.capitalize())
             candidates.add(p + "!")
             candidates.add(p + "01")
-            candidates.add(p + str(random.randint(100,999)))  # random varyasyon
+            candidates.add(p + str(random.randint(100,999)))  
 
             counter += 1
             if len(candidates) >= max_per_profile:
                 break
-        if counter > max_per_profile * 2:  # sonsuz döngü engelleme
+        if counter > max_per_profile * 2:
             break
 
     return list(sorted(candidates))[:max_per_profile]
